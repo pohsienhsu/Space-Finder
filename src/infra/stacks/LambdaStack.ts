@@ -1,6 +1,7 @@
 import * as cdk from "aws-cdk-lib";
 import { LambdaIntegration } from "aws-cdk-lib/aws-apigateway";
 import { ITable } from "aws-cdk-lib/aws-dynamodb";
+import { Effect, PolicyStatement } from "aws-cdk-lib/aws-iam";
 import {
   Code,
   Runtime,
@@ -27,6 +28,15 @@ export class LambdaStack extends cdk.Stack {
         TABLE_NAME: props.spacesTable.tableName
       }
     });
+
+    helloLambda.addToRolePolicy(new PolicyStatement({
+      effect: Effect.ALLOW,
+      actions: [
+        's3:ListAllMyBuckets',
+        's3:ListBucket'
+      ],
+      resources: ['*']
+    }))
 
     this.helloLambdaIntegration = new LambdaIntegration(helloLambda);
   }
