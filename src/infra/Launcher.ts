@@ -4,8 +4,10 @@ import { LambdaStack } from "./stacks/LambdaStack";
 import { ApiStack } from "./stacks/ApiStack";
 
 const app = new App();
-new DataStack(app, "SpaceFinderDataStack");
-const lambdaStack = new LambdaStack(app, "SpaceFinderLambdaStack");
+const dataStack = new DataStack(app, "SpaceFinderDataStack");
+const lambdaStack = new LambdaStack(app, "SpaceFinderLambdaStack", {
+  spacesTable: dataStack.spacesTable,
+});
 new ApiStack(app, "SpaceFinderApiStack", {
   helloLambdaIntegration: lambdaStack.helloLambdaIntegration,
 });
