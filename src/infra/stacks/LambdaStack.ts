@@ -29,6 +29,14 @@ export class LambdaStack extends cdk.Stack {
       }
     });
 
+    spacesLambda.addToRolePolicy(new PolicyStatement({
+      effect: Effect.ALLOW,
+      resources: [props.spacesTable.tableArn],
+      actions: [
+        "dynamodb:PutItem"
+      ]
+    }))
+
     this.spacesLambdaIntegration = new LambdaIntegration(spacesLambda);
   }
 }
