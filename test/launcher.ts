@@ -5,13 +5,13 @@ import { handler } from "../src/services/spaces/handler";
 
 handler(
   {
-    httpMethod: "PUT",
+    httpMethod: "DELETE",
     queryStringParameters: {
       spaceId: "93143f6a-d518-4221-bb8f-b0c99ac1e164",
     },
-    body: JSON.stringify({
-      location: 'Taiwan updated'
-    })
+    // body: JSON.stringify({
+    //   location: 'Taiwan updated'
+    // })
   } as any,
   {} as any
 );
