@@ -17,6 +17,7 @@ async function handler(event: APIGatewayProxyEvent, context: Context): Promise<A
     switch (event.httpMethod) {
       case 'GET':
         const getResponse = await getSpaces(event, ddbClient);
+        console.log(getResponse);
         return getResponse
         break;
       case 'POST':
