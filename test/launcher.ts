@@ -5,13 +5,15 @@ import { handler } from "../src/services/spaces/handler";
 
 handler(
   {
-    httpMethod: "DELETE",
-    queryStringParameters: {
-      spaceId: "93143f6a-d518-4221-bb8f-b0c99ac1e164",
-    },
-    // body: JSON.stringify({
-    //   location: 'Taiwan updated'
-    // })
+    httpMethod: "POST",
+    // queryStringParameters: {
+    //   spaceId: "93143f6a-d518-4221-bb8f-b0c99ac1e164",
+    // },
+    body: JSON.stringify({
+      location: 'United States of America'
+    })
   } as any,
   {} as any
-);
+).then(result => {
+  console.log(result);
+});

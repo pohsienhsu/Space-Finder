@@ -8,6 +8,7 @@ import { postSpaces } from "./PostSpaces";
 import { getSpaces } from "./GetSpaces";
 import { updateSpace } from "./UpdateSpace";
 import { deleteSpace } from "./DeleteSpace";
+import { MissingFieldError } from "../shared/Validator";
 
 const ddbClient = new DynamoDBClient({});
 
@@ -33,12 +34,18 @@ async function handler(event: APIGatewayProxyEvent, context: Context): Promise<A
       case 'DELETE':
         const deleteResponse = await deleteSpace(event, ddbClient);
         return deleteResponse;
-        
+
       default:
         break;
     }
   } catch (err) {
     console.error(err);
+    if (err instanceof MissingFieldError) {
+      return {
+        statusCode: 400,
+        body: JSON.stringify(err.message)
+      }
+    }
     return {
       statusCode: 500,
       body: JSON.stringify(err)
