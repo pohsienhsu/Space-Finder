@@ -1,10 +1,12 @@
 import * as cdk from "aws-cdk-lib";
 import { Construct } from "constructs";
-import { CfnUserPoolGroup, UserPool, UserPoolClient } from "aws-cdk-lib/aws-cognito";
+import { CfnIdentityPool, CfnUserPoolGroup, UserPool, UserPoolClient } from "aws-cdk-lib/aws-cognito";
 
 export class AuthStack extends cdk.Stack {
+
   private userPool: UserPool;
   private userPoolClient: UserPoolClient;
+  private identityPool: CfnIdentityPool;
 
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
@@ -12,6 +14,7 @@ export class AuthStack extends cdk.Stack {
     this.createUserPool();
     this.createUserPoolClient();
     this.createAdminsGroup();
+    this.createIdentityPool();
   }
 
   get getUserPool() {
@@ -56,6 +59,20 @@ export class AuthStack extends cdk.Stack {
     new CfnUserPoolGroup(this, 'SpaceAdmins', {
       userPoolId: this.userPool.userPoolId,
       groupName: "admins",
+    })
+  }
+
+  private createIdentityPool() {
+    this.identityPool = new CfnIdentityPool(this, "SpaceFinderIdentityPool", {
+      allowUnauthenticatedIdentities: true,
+      cognitoIdentityProviders: [{
+        clientId: this.userPoolClient.userPoolClientId,
+        providerName: this.userPool.userPoolProviderName
+      }]
+    })
+
+    new cdk.CfnOutput(this, 'SpaceFidnerIdentityPoolId', {
+      value: this.identityPool.ref
     })
   }
 }
