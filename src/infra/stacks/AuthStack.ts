@@ -8,7 +8,9 @@ import {
   UserPoolClient,
 } from "aws-cdk-lib/aws-cognito";
 import {
+  Effect,
   FederatedPrincipal,
+  PolicyStatement,
   Role,
   ServicePrincipal,
 } from "aws-cdk-lib/aws-iam";
@@ -26,10 +28,10 @@ export class AuthStack extends cdk.Stack {
 
     this.createUserPool();
     this.createUserPoolClient();
-    this.createAdminsGroup();
     this.createIdentityPool();
     this.createRoles();
     this.attachRoles();
+    this.createAdminsGroup();
   }
 
   get getUserPool() {
@@ -74,6 +76,7 @@ export class AuthStack extends cdk.Stack {
     new CfnUserPoolGroup(this, "SpaceAdmins", {
       userPoolId: this.userPool.userPoolId,
       groupName: "admins",
+      roleArn: this.adminRole.roleArn
     });
   }
 
@@ -126,7 +129,7 @@ export class AuthStack extends cdk.Stack {
         "sts:AssumeRoleWithWebIdentity"
       ),
     });
-    this.guestRole = new Role(this, "Cognito_SpaceFinder_AdminRole", {
+    this.adminRole = new Role(this, "Cognito_SpaceFinder_AdminRole", {
       assumedBy: new FederatedPrincipal(
         "cognito-identity.amazonaws.com",
         {
@@ -157,5 +160,12 @@ export class AuthStack extends cdk.Stack {
         }
       }
     });
+    this.adminRole.addToPolicy(new PolicyStatement({
+      effect: Effect.ALLOW,
+      actions: [
+        's3:ListAllMyBuckets'
+      ],
+      resources: ['*']
+    }))
   }
 }
