@@ -2,6 +2,7 @@ import * as cdk from "aws-cdk-lib";
 import { Construct } from "constructs";
 import {
   CfnIdentityPool,
+  CfnIdentityPoolRoleAttachment,
   CfnUserPoolGroup,
   UserPool,
   UserPoolClient,
@@ -28,6 +29,7 @@ export class AuthStack extends cdk.Stack {
     this.createAdminsGroup();
     this.createIdentityPool();
     this.createRoles();
+    this.attachRoles();
   }
 
   get getUserPool() {
@@ -110,24 +112,20 @@ export class AuthStack extends cdk.Stack {
         ),
       }
     );
-    this.guestRole = new Role(
-      this,
-      "Cognito_SpaceFinder_GuestRole",
-      {
-        assumedBy: new FederatedPrincipal(
-          "cognito-identity.amazonaws.com",
-          {
-            StringEquals: {
-              "cognito-identity.amazonaws.com:aud": this.identityPool.ref,
-            },
-            "ForAnyValue:StringLike": {
-              "cognito-identity.amazonaws.com:amr": "unauthenticated",
-            },
+    this.guestRole = new Role(this, "Cognito_SpaceFinder_GuestRole", {
+      assumedBy: new FederatedPrincipal(
+        "cognito-identity.amazonaws.com",
+        {
+          StringEquals: {
+            "cognito-identity.amazonaws.com:aud": this.identityPool.ref,
           },
-          "sts:AssumeRoleWithWebIdentity"
-        ),
-      }
-    );
+          "ForAnyValue:StringLike": {
+            "cognito-identity.amazonaws.com:amr": "unauthenticated",
+          },
+        },
+        "sts:AssumeRoleWithWebIdentity"
+      ),
+    });
     this.guestRole = new Role(this, "Cognito_SpaceFinder_AdminRole", {
       assumedBy: new FederatedPrincipal(
         "cognito-identity.amazonaws.com",
@@ -141,6 +139,23 @@ export class AuthStack extends cdk.Stack {
         },
         "sts:AssumeRoleWithWebIdentity"
       ),
+    });
+  }
+
+  private attachRoles() {
+    new CfnIdentityPoolRoleAttachment(this, "Roles", {
+      identityPoolId: this.identityPool.ref,
+      roles: {
+        'authenticated': this.authenticatedRole.roleArn,
+        'unauthenticated': this.guestRole.roleArn,
+      },
+      roleMappings: {
+        adminsMapping: {
+          type: 'Token',
+          ambiguousRoleResolution: 'AuthenticatedRole',
+          identityProvider: `${this.userPool.userPoolProviderName}:${this.userPoolClient.userPoolClientId}`,
+        }
+      }
     });
   }
 }
