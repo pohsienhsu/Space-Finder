@@ -4,6 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "synth": "cdk synth",
+    "deploy": "cdk deploy --all --outputs-file outputs.json",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
