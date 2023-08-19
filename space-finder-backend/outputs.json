@@ -14,5 +14,8 @@
   },
   "SpaceFinderApiStack": {
     "SpacesAPIEndpoint69BCFE19": "https://9c2ochc3xi.execute-api.us-west-2.amazonaws.com/prod/"
+  },
+  "SpaceFinderUIDeploymentStack": {
+    "SpaceFinderUrl": "d2ins8r4hizkv1.cloudfront.net"
   }
 }
