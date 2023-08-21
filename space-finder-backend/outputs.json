@@ -9,13 +9,13 @@
     "SpaceFidnerIdentityPoolId": "us-west-2:e980196a-8622-4baa-821f-402215a3ba18",
     "ExportsOutputFnGetAttSpaceFinderUserPool7895B095Arn93E88E6F": "arn:aws:cognito-idp:us-west-2:625854651678:userpool/us-west-2_HkKx3dJhZ"
   },
+  "SpaceFinderUIDeploymentStack": {
+    "SpaceFinderUrl": "d2ins8r4hizkv1.cloudfront.net"
+  },
   "SpaceFinderLambdaStack": {
     "ExportsOutputFnGetAttSpacesLambdaA5F923A4ArnE59FF2BB": "arn:aws:lambda:us-west-2:625854651678:function:SpaceFinderLambdaStack-SpacesLambdaA5F923A4-VHQKEpH0UxsI"
   },
   "SpaceFinderApiStack": {
     "SpacesAPIEndpoint69BCFE19": "https://9c2ochc3xi.execute-api.us-west-2.amazonaws.com/prod/"
-  },
-  "SpaceFinderUIDeploymentStack": {
-    "SpaceFinderUrl": "d2ins8r4hizkv1.cloudfront.net"
   }
 }
