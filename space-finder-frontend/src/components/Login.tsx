@@ -46,12 +46,14 @@ const Login = ({authService, setUsernameCb}: LoginProps) => {
         <form onSubmit={(e) => handleSubmit(e)}>
           <label>Username</label>
           <input
+            type="text"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
           />
           <br />
           <label>Password</label>
           <input
+            type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
