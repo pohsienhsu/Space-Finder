@@ -1,5 +1,5 @@
 import { SyntheticEvent, useState } from "react"
-import { AuthService } from "../services/AuthService"
+import { AuthService } from "../../services/auth/AuthService"
 import { Navigate } from "react-router-dom";
 
 type LoginProps = {
