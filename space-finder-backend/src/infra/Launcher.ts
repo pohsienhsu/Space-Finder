@@ -10,7 +10,9 @@ const dataStack = new DataStack(app, "SpaceFinderDataStack");
 const lambdaStack = new LambdaStack(app, "SpaceFinderLambdaStack", {
   spacesTable: dataStack.spacesTable,
 });
-const authStack = new AuthStack(app, "SpaceFinderAuthStack");
+const authStack = new AuthStack(app, "SpaceFinderAuthStack", {
+  spacePhotosBucket: dataStack.spacePhotosBucket,
+});
 
 new ApiStack(app, "SpaceFinderApiStack", {
   spacesLambdaIntegration: lambdaStack.spacesLambdaIntegration,
