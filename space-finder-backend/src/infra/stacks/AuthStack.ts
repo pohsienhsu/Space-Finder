@@ -96,7 +96,7 @@ export class AuthStack extends cdk.Stack {
       ],
     });
 
-    new cdk.CfnOutput(this, "SpaceFidnerIdentityPoolId", {
+    new cdk.CfnOutput(this, "SpaceFinderIdentityPoolId", {
       value: this.identityPool.ref,
     });
   }

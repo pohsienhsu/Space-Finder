@@ -11,7 +11,7 @@
   "SpaceFinderAuthStack": {
     "SpaceFinderUserPoolId": "us-west-2_HkKx3dJhZ",
     "SpaceFinderUserPoolClientId": "7lhq2uit8rk640uv06gvs8p4bp",
-    "SpaceFidnerIdentityPoolId": "us-west-2:e980196a-8622-4baa-821f-402215a3ba18",
+    "SpaceFinderIdentityPoolId": "us-west-2:e980196a-8622-4baa-821f-402215a3ba18",
     "ExportsOutputFnGetAttSpaceFinderUserPool7895B095Arn93E88E6F": "arn:aws:cognito-idp:us-west-2:625854651678:userpool/us-west-2_HkKx3dJhZ"
   },
   "SpaceFinderUIDeploymentStack": {
