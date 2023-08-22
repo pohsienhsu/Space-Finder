@@ -1,6 +1,6 @@
 import { type CognitoUser } from "@aws-amplify/auth";
 import { Amplify, Auth } from "aws-amplify";
-import { SpaceFinderAuthStack } from "../../../space-finder-backend/outputs.json";
+import { SpaceFinderAuthStack } from "../../../../space-finder-backend/outputs.json";
 
 const awsRegion = "us-west-2";
 

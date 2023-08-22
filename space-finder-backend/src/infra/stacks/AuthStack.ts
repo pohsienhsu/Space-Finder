@@ -14,6 +14,11 @@ import {
   Role,
   ServicePrincipal,
 } from "aws-cdk-lib/aws-iam";
+import { IBucket } from "aws-cdk-lib/aws-s3";
+
+interface AuthStackProps extends cdk.StackProps {
+  spacePhotosBucket: IBucket
+}
 
 export class AuthStack extends cdk.Stack {
   private userPool: UserPool;
@@ -23,13 +28,13 @@ export class AuthStack extends cdk.Stack {
   private guestRole: Role;
   private adminRole: Role;
 
-  constructor(scope: Construct, id: string, props?: cdk.StackProps) {
+  constructor(scope: Construct, id: string, props?: AuthStackProps) {
     super(scope, id, props);
 
     this.createUserPool();
     this.createUserPoolClient();
     this.createIdentityPool();
-    this.createRoles();
+    this.createRoles(props.spacePhotosBucket);
     this.attachRoles();
     this.createAdminsGroup();
   }
@@ -96,7 +101,7 @@ export class AuthStack extends cdk.Stack {
     });
   }
 
-  private createRoles() {
+  private createRoles(spacePhotosBucket: IBucket) {
     this.authenticatedRole = new Role(
       this,
       "Cognito_SpaceFinder_AuthenticatedRole",
@@ -143,6 +148,13 @@ export class AuthStack extends cdk.Stack {
         "sts:AssumeRoleWithWebIdentity"
       ),
     });
+    this.adminRole.addToPolicy(
+      new PolicyStatement({
+        effect: Effect.ALLOW,
+        actions: ["s3:PutObject", "s3:PutObjectAcl"],
+        resources: [spacePhotosBucket.bucketArn + "/*"],
+      })
+    );
   }
 
   private attachRoles() {
@@ -160,12 +172,5 @@ export class AuthStack extends cdk.Stack {
         }
       }
     });
-    this.adminRole.addToPolicy(new PolicyStatement({
-      effect: Effect.ALLOW,
-      actions: [
-        's3:ListAllMyBuckets'
-      ],
-      resources: ['*']
-    }))
   }
 }

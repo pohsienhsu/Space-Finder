@@ -1,7 +1,12 @@
 {
   "SpaceFinderDataStack": {
+    "ExportsOutputFnGetAttSpacePhotosBucket9FD3EAE1ArnA61BB112": "arn:aws:s3:::space-finder-photos-0aa3b590e49b",
     "ExportsOutputRefSpacesTable8A9973559FB4B87D": "SpacesTable-0aa3b590e49b",
+    "SpaceFinderPhotosBucketName": "space-finder-photos-0aa3b590e49b",
     "ExportsOutputFnGetAttSpacesTable8A997355Arn242927FE": "arn:aws:dynamodb:us-west-2:625854651678:table/SpacesTable-0aa3b590e49b"
+  },
+  "SpaceFinderLambdaStack": {
+    "ExportsOutputFnGetAttSpacesLambdaA5F923A4ArnE59FF2BB": "arn:aws:lambda:us-west-2:625854651678:function:SpaceFinderLambdaStack-SpacesLambdaA5F923A4-VHQKEpH0UxsI"
   },
   "SpaceFinderAuthStack": {
     "SpaceFinderUserPoolId": "us-west-2_HkKx3dJhZ",
@@ -11,9 +16,6 @@
   },
   "SpaceFinderUIDeploymentStack": {
     "SpaceFinderUrl": "d2ins8r4hizkv1.cloudfront.net"
-  },
-  "SpaceFinderLambdaStack": {
-    "ExportsOutputFnGetAttSpacesLambdaA5F923A4ArnE59FF2BB": "arn:aws:lambda:us-west-2:625854651678:function:SpaceFinderLambdaStack-SpacesLambdaA5F923A4-VHQKEpH0UxsI"
   },
   "SpaceFinderApiStack": {
     "SpacesAPIEndpoint69BCFE19": "https://9c2ochc3xi.execute-api.us-west-2.amazonaws.com/prod/"
